@@ -5,3 +5,12 @@ build/
 # Executáveis gerados localmente (o binário oficial fica em bin/)
 /*.exe
 src/*.exe
+
+# Ferramentas de IA e configurações locais do editor
+.agents/
+.claude/
+skills-lock.json
+CLAUDE.md
+AGENTS.md
+.vscode/
+desktop.ini
