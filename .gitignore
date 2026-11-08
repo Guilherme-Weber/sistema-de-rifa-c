@@ -1,0 +1,7 @@
+# Artefatos de compilação
+*.o
+*.obj
+build/
+# Executáveis gerados localmente (o binário oficial fica em bin/)
+/*.exe
+src/*.exe
