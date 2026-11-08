@@ -1,10 +1,16 @@
-﻿# Sistema de Rifa em C
+# Sistema de Rifa em C
 
-Projeto Integrador desenvolvido como trabalho acadêmico. Consiste em um sistema de rifa executado no terminal, escrito em linguagem C.
+Sistema de rifa executado no terminal, desenvolvido em linguagem C como trabalho acadêmico para o Projeto Integrador I do Centro Universitário UNIFACEAR (2020).
 
-**Autores:** Guilherme da Luz Weber e Erick Alan da Silva
+**Autores:** Guilherme da Luz Weber (Sistemas de Informação) e Érick Alan da Silva (Análise e Desenvolvimento de Sistemas)
+
+**Orientador:** Prof. Rodrigo Bevilacqua Marcondes
+
+A documentação completa do projeto está disponível em [docs/documentacao-projeto-integrador.docx](docs/documentacao-projeto-integrador.docx).
 
 ## Descrição
+
+As plataformas de rifa existentes funcionam apenas online e cobram taxas sobre cada transação, o que pode inviabilizar rifas de valores mais baixos. O sistema proposto oferece uma alternativa simples e intuitiva, com gerenciamento local, que depende apenas de um computador: os administradores cadastram os prêmios e realizam o sorteio, enquanto os compradores se cadastram e escolhem os números que desejam comprar ou reservar.
 
 O sistema permite o cadastro de administradores e usuários, a reserva e compra de números em uma cartela de 108 números e o sorteio de vencedores para até cinco prêmios.
 
@@ -57,5 +63,10 @@ O código-fonte está codificado em Windows-1252 (ANSI).
 ## Tecnologias
 
 - Linguagem C
+- Dev-C++ (ambiente de desenvolvimento)
 - Bibliotecas padrão: `stdio.h`, `stdlib.h`, `string.h`, `time.h`, `locale.h`
 - API do Windows: `windows.h` (controle do cursor no console) e `conio.h` (leitura do teclado)
+
+## Documentação
+
+O documento em [docs/documentacao-projeto-integrador.docx](docs/documentacao-projeto-integrador.docx) apresenta o processo completo de desenvolvimento: PM Canvas, análise de concorrência, requisitos, regras de negócio, diagrama de casos de uso e protótipo das telas.
