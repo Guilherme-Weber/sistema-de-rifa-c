@@ -1,3 +1,23 @@
+/**
+ * @file rifa.c
+ * @brief Sistema de rifa executado no terminal do Windows.
+ *
+ * Projeto Integrador I - Centro Universitário UNIFACEAR (2020).
+ *
+ * Permite o cadastro de usuários, a reserva e a compra de números em uma
+ * cartela de 108 números (6 linhas por 18 colunas), o cadastro de até cinco
+ * prêmios pelo administrador e o sorteio aleatório dos vencedores.
+ *
+ * Toda a navegação é feita pelo teclado (setas e Enter). As telas são
+ * desenhadas com printf() e o cursor é posicionado com gotoxy(), que usa a
+ * API do console do Windows. Os dados ficam apenas em memória e são perdidos
+ * ao encerrar o programa.
+ *
+ * @authors Guilherme da Luz Weber, Érick Alan da Silva
+ * @note O arquivo está codificado em Windows-1252 (ANSI) para exibir
+ *       corretamente os acentos no console com setlocale().
+ */
+
 #include <stdio.h>
 #include <time.h>
 #include <string.h>
@@ -6,13 +26,25 @@
 #include <windows.h>
 #include <locale.h>
 
+/** Capacidade máxima dos vetores de pessoas (também é a quantidade de números da cartela). */
 #define TAM 108
 
+/**
+ * @name Códigos das setas do teclado
+ * Valores retornados por getch() após o prefixo das teclas especiais.
+ * @{
+ */
 #define ACIMA 72
 #define ABAIXO 80
 #define DIREITA 77
 #define ESQUERDA 75
+/** @} */
 
+/**
+ * @brief Dados de um administrador.
+ * @note Estrutura reservada para o cadastro de administradores, ainda não
+ *       utilizada pelo fluxo do programa.
+ */
 struct Pessoa
 {
 	int codigo;
@@ -21,10 +53,16 @@ struct Pessoa
 	char senhaadm[100];
 };
 
+/** Vetor de administradores cadastrados (não utilizado). */
 struct Pessoa ADM[TAM];
+/** Administrador autenticado (não utilizado). */
 struct Pessoa pessoaADM;
+/** Próxima posição livre no vetor ADM (não utilizado). */
 int posicaoAtual2 = 0;
 
+/**
+ * @brief Dados de um usuário (comprador) da rifa.
+ */
 struct gente
 {
 
@@ -36,6 +74,9 @@ struct gente
 	int pessoaAtual;
 };
 
+/**
+ * @brief Dados digitados na tela de cadastro (não utilizado).
+ */
 struct dadosdecadastro
 {
 
@@ -44,8 +85,13 @@ struct dadosdecadastro
 	char senha[100];
 };
 
+/** Número sorteado (não utilizado). */
 int numero_sort = 0;
 
+/**
+ * @brief Indicadores de erro na validação do cadastro.
+ * @note Usado apenas pela validação que está comentada em main().
+ */
 struct errocadastro
 {
 
@@ -54,30 +100,56 @@ struct errocadastro
 	int erro3;
 };
 
+/** Usuários cadastrados, na ordem de cadastro. */
 struct gente pessoas[TAM];
+/** Cópia dos dados do usuário autenticado no momento. */
 struct gente pessoaLogada;
+/** Vetor auxiliar de usuários (não utilizado). */
 struct gente temp[108];
 
+/**
+ * @brief Nome de uma pessoa (não utilizado).
+ */
 struct NDP
 {
 
 	char nomepessoa[108];
 };
 
+/** Nomes associados aos números da cartela (não utilizado). */
 struct NDP nomedapossoa[108];
 
+/** Estado da validação do cadastro (ver errocadastro). */
 struct errocadastro errcad;
 
+/** Dados temporários do cadastro (não utilizado). */
 struct dadosdecadastro dadocada;
 
+/** Quantidade de usuários cadastrados; também é o índice do próximo cadastro em pessoas. */
 int posicaoAtual = 0;
 
+/**
+ * @brief Posiciona o cursor do console.
+ *
+ * @param x Coluna (0 é a borda esquerda).
+ * @param y Linha (0 é o topo).
+ */
 void gotoxy(int x, int y)
 {
 	COORD p = {x, y};
 	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), p);
 }
 
+/**
+ * @brief Autentica um usuário pelo e-mail e pela senha.
+ *
+ * Procura o e-mail no vetor pessoas. Se a senha conferir, copia os dados do
+ * usuário para pessoaLogada.
+ *
+ * @param email E-mail digitado na tela de login.
+ * @param senha Senha digitada na tela de login.
+ * @return 1 se o e-mail e a senha conferem; 0 caso contrário.
+ */
 int autenticarPessoa(char email[], char senha[])
 {
 	int i = 0;
@@ -104,11 +176,18 @@ int autenticarPessoa(char email[], char senha[])
 	return retorno; // 0-Senha/Usuario invalido  1-Senha/Usuario valido
 }
 
+/**
+ * @brief Exibe a mensagem de dado inválido no cadastro.
+ * @note Chamada apenas pela validação que está comentada em main().
+ */
 void errocadastro()
 {
 	printf("O que foi colocado nï¿½o ï¿½ oque foi pedido");
 }
 
+/**
+ * @brief Desenha a moldura vazia usada para mensagens e para a cartela.
+ */
 void Telavasia()
 {
 	printf(" **************************************************************************** \n");
@@ -132,6 +211,10 @@ void Telavasia()
 	printf(" **************************************************************************** \n");
 }
 
+/**
+ * @brief Desenha a tela de cadastro de administrador.
+ * @note Tela pronta, mas ainda não chamada pelo programa.
+ */
 void TelaCadastroADM()
 {
 	printf(" **************************************************************************** \n");
@@ -157,6 +240,9 @@ void TelaCadastroADM()
 	printf(" **************************************************************************** \n");
 }
 
+/**
+ * @brief Desenha a tela de cadastro de usuário (e-mail, nome e senha).
+ */
 void TelaCadastro()
 {
 	printf(" **************************************************************************** \n");
@@ -182,6 +268,9 @@ void TelaCadastro()
 	printf(" **************************************************************************** \n");
 }
 
+/**
+ * @brief Desenha a tela de login do usuário (e-mail e senha).
+ */
 void TelaLogin()
 {
 	printf(" **************************************************************************** \n");
@@ -205,6 +294,11 @@ void TelaLogin()
 	printf(" **************************************************************************** \n");
 }
 
+/**
+ * @brief Desenha o menu do usuário com as opções Login, Cadastro e Exit.
+ *
+ * As opções ficam nas linhas 13, 14 e 15 do console, na coluna 29.
+ */
 void TelaLoginCadastro()
 {
 	printf(" **************************************************************************** \n");
@@ -228,6 +322,11 @@ void TelaLoginCadastro()
 	printf(" **************************************************************************** \n");
 }
 
+/**
+ * @brief Limpa o console e desenha a tela inicial (Administrador ou Usuário).
+ *
+ * As opções ficam nas linhas 13 e 14 do console, na coluna 29.
+ */
 void TelaInicio()
 {
 	system("cls");
@@ -252,6 +351,12 @@ void TelaInicio()
 	printf(" **************************************************************************** \n");
 }
 
+/**
+ * @brief Limpa o console e desenha o menu do administrador.
+ *
+ * As opções Cadastrar Prêmios, Sortear Vencedores e Sair ficam nas linhas
+ * 13, 14 e 15 do console, na coluna 29.
+ */
 void TelaADM1()
 {
 	system("cls");
@@ -276,6 +381,14 @@ void TelaADM1()
 	printf(" **************************************************************************** \n");
 }
 
+/**
+ * @brief Limpa o console e desenha a cartela com os 108 números.
+ *
+ * Os números são exibidos com três dígitos, em 6 linhas de 18 colunas, a
+ * partir da linha 2 do console. Cada número ocupa 4 colunas, começando na
+ * coluna 4. Abaixo da cartela são exibidas as opções de reserva, compra e
+ * saída.
+ */
 void telacomosnumeros()
 {
 	system("cls");
@@ -334,10 +447,28 @@ void telacomosnumeros()
 
 } // telacomosnumeros
 
+/**
+ * @brief Tela de cadastro de prêmios (não implementada).
+ *
+ * O cadastro de prêmios é feito diretamente em main().
+ *
+ * @param pre1 Descrição do 1º prêmio.
+ * @param pre2 Descrição do 2º prêmio.
+ * @param pre3 Descrição do 3º prêmio.
+ * @param pre4 Descrição do 4º prêmio.
+ * @param pre5 Descrição do 5º prêmio.
+ */
 void telaCadastroPremios(char pre1[], char pre2[], char pre3[], char pre4[], char pre5[])
 {
 }
 
+/**
+ * @brief Exibe a tela inicial e aguarda a escolha do perfil.
+ *
+ * O cursor (@) é movido com as setas para cima e para baixo; Enter confirma.
+ *
+ * @return Linha selecionada: 13 para Administrador ou 14 para Usuário.
+ */
 int primeiroMenu()
 {
 	int tecla = 0;
@@ -395,6 +526,14 @@ int primeiroMenu()
 	return linha;
 } // primeiroMenu
 
+/**
+ * @brief Exibe o menu do administrador e aguarda a escolha de uma opção.
+ *
+ * O cursor (@) é movido com as setas para cima e para baixo; Enter confirma.
+ *
+ * @return Linha selecionada: 13 para Cadastrar Prêmios, 14 para Sortear
+ *         Vencedores ou 15 para Sair.
+ */
 int menu2Admin()
 {
 	int linha = 13;
@@ -447,6 +586,30 @@ int menu2Admin()
 	return linha;
 }
 
+/**
+ * @brief Ponto de entrada: inicializa a cartela e executa o fluxo de menus.
+ *
+ * Fluxo principal:
+ * 1. Tela inicial: escolha entre Administrador e Usuário.
+ * 2. Administrador: cadastra até cinco prêmios ou sorteia os vencedores e
+ *    volta à tela inicial.
+ * 3. Usuário: faz o cadastro ou o login. Depois do login, navega pela cartela
+ *    com as setas e digita 1 para reservar, 2 para comprar ou 0 para sair.
+ *
+ * Estruturas de dados locais:
+ * - matriztests: número da rifa (1 a 108) em cada posição da cartela.
+ * - matrizstats: situação de cada número para todos os usuários
+ *   (0 = livre, 1 = reservado, 2 = comprado). É atualizada com as escolhas
+ *   do usuário quando ele digita 0 para sair da cartela.
+ * - pessoas[i].matrizpessoal: escolhas de cada usuário, com os mesmos códigos.
+ * - vetorDP: para cada número comprado, a posição do comprador mais 1.
+ *   Observação: grava posicaoAtual (total de cadastrados), e não o índice do
+ *   usuário logado.
+ * - vetorb: os cinco números sorteados.
+ *
+ * O sorteio considera apenas números comprados (situação 2) e não repete
+ * números.
+ */
 main()
 {
 
