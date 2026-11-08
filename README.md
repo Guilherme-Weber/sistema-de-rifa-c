@@ -1,84 +1,61 @@
-﻿# 🎟️ Sistema de Rifa em C
+﻿# Sistema de Rifa em C
 
-Sistema de rifa via terminal desenvolvido em **linguagem C** como **Projeto Integrador (PI)**.
-Permite cadastrar administradores e usuários, reservar ou comprar números de uma cartela de 108 números e sortear vencedores para até 5 prêmios.
+Projeto Integrador desenvolvido como trabalho acadêmico. Consiste em um sistema de rifa executado no terminal, escrito em linguagem C.
 
-> Autores: **Guilherme da Luz Weber** e **Erick Alan da Silva**
+**Autores:** Guilherme da Luz Weber e Erick Alan da Silva
 
----
+## Descrição
 
-## ✨ Funcionalidades
+O sistema permite o cadastro de administradores e usuários, a reserva e compra de números em uma cartela de 108 números e o sorteio de vencedores para até cinco prêmios.
 
-- **Cadastro e login** de usuários (nome, e-mail e senha numérica)
-- **Cadastro de administrador** (ADM)
-- **Cartela com 108 números** (6 linhas × 18 colunas) exibida no console
-- **Reserva** ou **compra** de números pelo usuário
-- **Cadastro de até 5 prêmios** pelo administrador
-- **Sorteio aleatório** dos vencedores, exibindo número sorteado, prêmio e nome do ganhador
-- **Navegação pelos menus com as setas do teclado** e `Enter` para selecionar
+### Funcionalidades
 
-## 📁 Estrutura do repositório
+- Cadastro e autenticação de usuários (nome, e-mail e senha numérica)
+- Cadastro de administrador
+- Cartela com 108 números (6 linhas por 18 colunas)
+- Reserva e compra de números
+- Cadastro de até cinco prêmios pelo administrador
+- Sorteio aleatório dos vencedores, com exibição do número sorteado, do prêmio e do ganhador
+- Navegação pelos menus com as setas do teclado
+
+## Estrutura do repositório
 
 ```
-pi-rifa_em_c/
-├── src/
-│   └── rifa.c                              # Código-fonte do sistema
-├── bin/
-│   └── rifa.exe                            # Executável compilado para Windows
-├── docs/
-│   └── documentacao-projeto-integrador.docx  # Documentação do Projeto Integrador
-└── README.md
+src/rifa.c                                 Código-fonte
+bin/rifa.exe                               Executável compilado para Windows
+docs/documentacao-projeto-integrador.docx  Documentação do projeto
 ```
 
-## 🛠️ Requisitos
+## Requisitos
 
-O programa usa bibliotecas exclusivas do Windows (`windows.h` e `conio.h`), portanto **roda apenas no Windows**.
+- Sistema operacional Windows (o código utiliza as bibliotecas `windows.h` e `conio.h`)
+- Compilador C, como GCC (MinGW-w64)
 
-- Windows
-- Compilador C — por exemplo [MinGW-w64 (GCC)](https://www.mingw-w64.org/) ou o compilador do [Dev-C++ / Code::Blocks](https://www.codeblocks.org/)
+## Execução
 
-## ▶️ Como executar
+Executável pré-compilado:
 
-### Opção 1 — Executável pronto
-
-Execute o arquivo [`bin/rifa.exe`](bin/rifa.exe) com dois cliques ou pelo terminal:
-
-```bash
+```
 bin\rifa.exe
 ```
 
-### Opção 2 — Compilar a partir do código-fonte
+Compilação a partir do código-fonte:
 
-```bash
+```
 gcc src/rifa.c -o rifa.exe
 rifa.exe
 ```
 
-> 💡 O código-fonte usa a codificação **Windows-1252 (ANSI)** para os acentos. Abra-o no editor com essa codificação para que os caracteres apareçam corretamente.
+O código-fonte está codificado em Windows-1252 (ANSI).
 
-## 🎮 Como usar
+## Utilização
 
-1. Na tela inicial, escolha **Administrador** ou **Usuário** usando as setas `↑` `↓` e `Enter`.
-2. **Administrador:** faça o cadastro de ADM, cadastre os prêmios e, quando quiser, escolha **Sortear Vencedores**.
-3. **Usuário:** faça o **Cadastro** e depois o **Login**. Na cartela de números:
-   - `1` → reservar um número
-   - `2` → comprar um número
-   - `0` → sair
-4. No sorteio, o sistema mostra cada prêmio, o número sorteado e o nome do vencedor.
+1. Na tela inicial, selecione **Administrador** ou **Usuário** com as setas do teclado e confirme com Enter.
+2. **Administrador:** realize o cadastro, registre os prêmios e execute o sorteio dos vencedores.
+3. **Usuário:** realize o cadastro e o login. Na cartela de números, digite `1` para reservar, `2` para comprar ou `0` para sair.
 
-## 🧰 Tecnologias
+## Tecnologias
 
-- Linguagem **C**
+- Linguagem C
 - Bibliotecas padrão: `stdio.h`, `stdlib.h`, `string.h`, `time.h`, `locale.h`
-- APIs do Windows: `windows.h` (posicionamento do cursor no console) e `conio.h` (leitura de teclas)
-
-## 👥 Autores
-
-| Nome | GitHub |
-|------|--------|
-| Guilherme da Luz Weber | [@Guilherme-Weber](https://github.com/Guilherme-Weber) |
-| Erick Alan da Silva | — |
-
----
-
-Projeto desenvolvido para fins acadêmicos.
+- API do Windows: `windows.h` (controle do cursor no console) e `conio.h` (leitura do teclado)
