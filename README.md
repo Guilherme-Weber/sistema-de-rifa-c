@@ -39,7 +39,7 @@ docs/documentacao-projeto-integrador.docx  Documentação do projeto
 
 ## Execução
 
-Executável pré-compilado:
+Executável pré-compilado, disponível em `bin/` e na página de [Releases](https://github.com/Guilherme-Weber/sistema-de-rifa-c/releases):
 
 ```
 bin\rifa.exe
@@ -48,11 +48,15 @@ bin\rifa.exe
 Compilação a partir do código-fonte:
 
 ```
-gcc src/rifa.c -o rifa.exe
+gcc -std=gnu89 -O2 src/rifa.c -o rifa.exe
 rifa.exe
 ```
 
-O código-fonte está codificado em Windows-1252 (ANSI).
+A opção `-std=gnu89` é necessária nas versões recentes do GCC, pois o código segue o padrão C mais antigo aceito pelo Dev-C++ (por exemplo, `main()` sem tipo de retorno). O código-fonte está codificado em Windows-1252 (ANSI).
+
+## Documentação do código
+
+As funções, estruturas e variáveis globais de `src/rifa.c` estão documentadas com comentários no formato [Doxygen](https://www.doxygen.nl/). O cabeçalho do arquivo e o comentário de `main()` descrevem o fluxo do programa e as estruturas usadas na cartela e no sorteio.
 
 ## Utilização
 
